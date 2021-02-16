@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Onlen Shop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" th:href="@{/productList}">Product List</a>
+            <a class="nav-link" th:href="@{/shoppingCart}">My Cart</a>
+            <th:block sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
+                <a class="nav-link" th:href="@{/admin/orderList}">Order List</a>
+            </th:block>
+            <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+                <a class="nav-link" th:href="@{/admin/product}">Create Product</a>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                Hello
+                <a class="nav-link" th:href="@{/admin/accountInfo}" th:utext="${#request.userPrincipal.name}">..</a>
+                &nbsp;|&nbsp;
+                <a class="nav-link" th:href="@{/admin/logout}">Logout</a>
+            </th:block>
+
+            <th:block sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/admin/login}">Login</a>
+            </th:block>
+        </div>
+    </div>
+</nav>

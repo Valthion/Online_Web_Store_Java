@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <style>
+            .hero{
+                margin-top: 7%;
+                margin-left: 20%;
+                height: 100%;
+                width: 60%;
+                background-image: linear-gradient(rgba(255,255,255), rgba(255,255,255)), 
+                    url();
+                background-position: top ;
+                background-size: cover;
+                overflow-x: hidden;
+                position: relative;
+            }
+
+            body{
+                background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg);
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Shiawasede Tanoshī</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                    <a class="nav-link" th:href="@{/productList}">Product List</a>
+                    <a class="nav-link" th:href="@{/shoppingCart}">My Cart</a>
+                    <th:block sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
+                        <a class="nav-link" th:href="@{/admin/orderList}">Order List</a>
+                    </th:block>
+                    <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+                        <a class="nav-link" th:href="@{/admin/product}">Create Product</a>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        Hello
+                        <a class="nav-link" th:href="@{/admin/accountInfo}" th:utext="${#request.userPrincipal.name}">..</a>
+                        &nbsp;|&nbsp;
+                        <a class="nav-link" th:href="@{/admin/logout}">Logout</a>
+                    </th:block>
+
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <a class="nav-link active" th:href="@{/admin/login}">Login <span class="sr-only">(current)</span></a>
+                    </th:block>
+                </div>
+            </div>
+        </nav>
+        <div class="hero">
+
+
+            <center>
+                <h1>Login for Employee and Manager</h1>
+            </center>
+            <div class="row">
+                <div class="col">
+                    <img  src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?size=338&ext=jpg">
+                </div>
+                <div class="col">
+                    <th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+                        <div th:if= "${#request.getParameter('error') == 'true'}"
+                             style="color: red; margin: 10px 0px;">
+                            Login Failed!!!<br /> Reason :
+                            <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
+                        </div>
+                    </th:block>
+
+                    <form method="POST" th:action="@{/j_spring_security_check}">
+                        <table cellpadding='5%'>
+                            <tr>
+                                <td>Username</td>
+                                <td><input name="userName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td><input type="password" name="password" /></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <input class="btn btn-primary" type="submit" value="Login" />
+                                    <input class="btn btn-secondary" type="reset"  value="Reset" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <span class="error-message" th:utext="${error}"></span>
+                    <br>
+                    <div style="text-align:left">
+                        <h3>User/Password:</h3>
+                        <ul>        
+                            <li>employee/123</li>
+                            <li>admin/123</li>   
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- /login?error=true -->
+
+        </div>
+
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</html>

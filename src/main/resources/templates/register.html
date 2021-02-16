@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form method="POST" th:object = "${usr}" th:action="@{/register_exe}">
+          
+         <table>
+            <tr>
+               <td>Username *</td>
+               <td><input th:field="*{username}" /></td>
+               <td>
+       
+               </td>
+            </tr>
+            <tr>
+               <td>Password *</td>
+               <td><input th:field="*{password}" /></td>
+               <td>
+        
+               </td>
+            </tr>
+            <tr>
+               <td>Name *</td>
+               <td><input th:field="*{name}" /></td>
+               <td>
+       
+               </td>
+            </tr>
+            <tr>
+               <td>Email *</td>
+               <td><input th:field="*{email}" /></td>
+               <td>
+                 
+               </td>
+            </tr>
+            <tr>
+               <td>Phone *</td>
+               <td><input th:field="*{phone}" /></td>
+               <td>
+                 
+               </td>
+            </tr>
+            <tr>
+               <td>Address *</td>
+               <td><input th:field="*{address}" /></td>
+               <td>
+               
+               </td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+               <td><input type="submit" value="Submit" /> <input type="reset"
+                  value="Reset" /></td>
+            </tr>
+         </table>
+          
+      </form>
+    </body>
+</html>
